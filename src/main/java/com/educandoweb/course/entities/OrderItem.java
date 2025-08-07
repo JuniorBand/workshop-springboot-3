@@ -14,6 +14,7 @@ import java.util.Objects;
 @Table(name = "tb_order_item")
 public class OrderItem {
 
+    @JsonIgnore
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
@@ -37,6 +38,15 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         id.setProduct(product);
+    }
+
+    @JsonIgnore
+    public Order getOrder() {
+        return id.getOrder();
+    }
+
+    public Product getProduct() {
+        return id.getProduct();
     }
 
     @Override
