@@ -1,6 +1,7 @@
 package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,18 +12,18 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "tb_order_item")
-public class OrdemItem {
+public class OrderItem {
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
 
-    public OrdemItem() {
+    public OrderItem() {
     }
 
-    public OrdemItem(Order order, Product product, Integer quantity, Double price) {
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
         super();
         id.setOrder(order);
         id.setProduct(product);
@@ -30,16 +31,8 @@ public class OrdemItem {
         this.price = price;
     }
 
-    public Order getOrder() {
-        return id.getOrder();
-    }
-
     public void setOrder(Order order) {
         id.setOrder(order);
-    }
-
-    public Product getProduct() {
-        return id.getProduct();
     }
 
     public void setProduct(Product product) {
@@ -49,8 +42,8 @@ public class OrdemItem {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        OrdemItem ordemItem = (OrdemItem) o;
-        return Objects.equals(id, ordemItem.id);
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(id, orderItem.id);
     }
 
     @Override
