@@ -18,11 +18,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-
-    @ManyToMany
-    @JoinTable(name = "tb_product_category",
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category() {
