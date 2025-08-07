@@ -1,10 +1,11 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @Entity
@@ -16,6 +17,10 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Transient
+    @ManyToMany
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }
