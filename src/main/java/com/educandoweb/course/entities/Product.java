@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -25,11 +26,10 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    @JsonIgnore
     @Getter
     @Setter(AccessLevel.NONE)
-    @ManyToMany
-    @JoinColumn(name = "category_id")
+    @ManyToMany(mappedBy = "products")
     private Set<Category> categories = new HashSet<>();
 
     public Product() {}
