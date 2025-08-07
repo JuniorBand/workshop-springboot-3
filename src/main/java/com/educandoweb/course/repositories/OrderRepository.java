@@ -1,6 +1,5 @@
 package com.educandoweb.course.repositories;
 
-
 import com.educandoweb.course.entities.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
