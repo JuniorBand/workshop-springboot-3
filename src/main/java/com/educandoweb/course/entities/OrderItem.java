@@ -32,6 +32,10 @@ public class OrderItem {
         this.price = price;
     }
 
+    public Double getSubTotal() {
+        return price * quantity;
+    }
+
     public void setOrder(Order order) {
         id.setOrder(order);
     }
