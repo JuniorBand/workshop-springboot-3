@@ -1,0 +1,46 @@
+services:
+  app:
+    # Nome do serviço da sua aplicação
+    container_name: spring-boot-app
+    # Constrói a imagem Docker a partir do Dockerfile que você criou.
+    build: .
+    # Mapeia a porta 8080 do seu PC para a porta 8080 do contêiner.
+    ports:
+      - "${PORT}:8080"
+    # Define as variáveis de ambiente para a sua aplicação se conectar ao banco de dados.
+    environment:
+      # URL de conexão do banco. Note que "postgres" é o nome do serviço do DB.
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/workshop
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      PORT: ${PORT}
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    # Garante que a aplicação só vai iniciar depois que o banco de dados estiver pronto.
+    depends_on:
+      - postgres
+    volumes:
+      # "/app/data" é o caminho dentro do contêiner onde os dados serão salvos
+      - app-data:/app/data
+
+  postgres:
+    # Nome do serviço do banco de dados
+    container_name: postgres-db
+    # Usa a imagem oficial do PostgreSQL.
+    image: postgres:14-alpine
+    # Define as variáveis de ambiente do banco de dados (usuário, senha e nome do DB).
+    environment:
+      POSTGRES_DB: workshop
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    # Mapeia a porta do banco de dados. Útil para acessar o DB com ferramentas externas.
+    ports:
+      - "5432:5432"
+    # Salva os dados do banco em um volume, para que eles não sejam perdidos se o contêiner for recriado.
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+# Define o volume para persistir os dados do banco.
+volumes:
+  postgres-data:
+  app-data:

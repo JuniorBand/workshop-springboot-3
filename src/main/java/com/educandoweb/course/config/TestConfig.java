@@ -29,7 +29,7 @@ public class TestConfig implements CommandLineRunner {
     private OrderRepository orderRepository;
 
     @Autowired
-    OrderItemRepository orderItemRepository;
+    private OrderItemRepository orderItemRepository;
 
 
     @Override
